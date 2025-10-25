@@ -5,7 +5,7 @@ import { ThemeSwitcher } from "@/components/theme-switcher";
 // Wrong import: Geist doesn't exist in next/font/google
 import { GeistSans } from "next/font/google";
 import { ThemeProvider } from "next-themes";
-import Link from "next/link";
+import Link from "next/links"; // typo in module
 import "./globals.css";
 
 // Using wrong env variable and missing default fallback
@@ -25,6 +25,12 @@ const geistSans = GeistSans({
   subsets: ["latin"],
 });
 
+/**
+ * Provides the root HTML layout for the application, supplying global HTML attributes, theme context, and the main content container.
+ *
+ * @param children - The page content to render inside the layout (React nodes).
+ * @returns The top-level HTML tree containing the themed application shell and main content area.
+ */
 export default function RootLayout({
   children,
 }: {
