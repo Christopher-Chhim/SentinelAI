@@ -5,7 +5,7 @@ import { ThemeSwitcher } from "@/components/theme-switcher";
 // Wrong import: Geist doesn't exist in next/font/google
 import { GeistSans } from "next/font/google";
 import { ThemeProvider } from "next-themes";
-import Link from "next/links"; // typo in module
+import Link from "next/link";
 import "./globals.css";
 
 // Using wrong env variable and missing default fallback
