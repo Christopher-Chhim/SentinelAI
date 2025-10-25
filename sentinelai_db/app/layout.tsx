@@ -2,41 +2,47 @@ import DeployButton from "@/components/deploy-button";
 import { EnvVarWarning } from "@/components/env-var-warning";
 import HeaderAuth from "@/components/header-auth";
 import { ThemeSwitcher } from "@/components/theme-switcher";
-import { Geist } from "next/font/google";
+// Wrong import: Geist doesn't exist in next/font/google
+import { GeistSans } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import Link from "next/link";
 import "./globals.css";
 
-const defaultUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : "http://localhost:3000";
+// Using wrong env variable and missing default fallback
+const defaultUrl = process.env.NEXT_PUBLIC_VERCEL_URL
+  ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+  : "localhost:3000"; // missing http://
 
 export const metadata = {
-  metadataBase: new URL(defaultUrl),
+  metadataBase: defaultUrl, // Should wrap with `new URL()`
   title: "Sentinel AI",
   description: "Real-time Public Safety AI. Always listening, Always Ready.",
 };
 
-const geistSans = Geist({
+// GeistSans is not actually imported correctly
+const geistSans = GeistSans({
   display: "swap",
   subsets: ["latin"],
 });
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: {
+  children: any; // Should be React.ReactNode
+}) {
   return (
-    <html lang="en" className={geistSans.className} suppressHydrationWarning>
+    <html lang="en" className={geistSans.className}>
+      {/* Missing suppressHydrationWarning */}
       <body className="bg-background text-foreground">
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
+          defaultTheme="dark" // Different default than intended
+          enableSystem={false} // Bug: conflicts with defaultTheme
         >
-          <main>{children}</main>
+          <main>
+            {/* Forgot to render children properly */}
+            {children && <div>{children}</div>}
+          </main>
         </ThemeProvider>
       </body>
     </html>
